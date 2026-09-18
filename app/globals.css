@@ -1,26 +1,137 @@
 @import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme {
+  --font-serif: var(--font-cormorant), 'Cormorant Garamond', Georgia, serif;
+  --font-sans: var(--font-jost), 'Jost', sans-serif;
+  --font-devanagari: var(--font-devanagari), 'Tiro Devanagari Sanskrit', serif;
+
+  --color-night: #171208;
+  --color-night-2: #221A0E;
+  --color-night-3: #2E2413;
+  --color-paper: #FCFAF5;
+  --color-paper-2: #F5F0E5;
+  --color-paper-3: #EDE5D5;
+  --color-ink: #2A2317;
+  --color-ink-2: #6A6052;
+  --color-ink-3: #9B9081;
+  --color-gold: #A8842F;
+  --color-gold-lit: #D3B36B;
+  --color-gold-pale: #E9DBBC;
+
+  --color-box-cream: #EFE4CE;
+  --color-box-midnight: #22304E;
+  --color-box-plum: #4B2A45;
+}
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --night: #171208;
+  --night-2: #221A0E;
+  --night-3: #2E2413;
+  --paper: #FCFAF5;
+  --paper-2: #F5F0E5;
+  --paper-3: #EDE5D5;
+  --ink: #2A2317;
+  --ink-2: #6A6052;
+  --ink-3: #9B9081;
+  --gold: #A8842F;
+  --gold-lit: #D3B36B;
+  --gold-pale: #E9DBBC;
+
+  --hairline-light: rgba(42, 35, 23, 0.13);
+  --hairline-gold: rgba(168, 132, 47, 0.32);
+  --hairline-dark: rgba(233, 219, 188, 0.17);
+
+  --box-cream: #EFE4CE;
+  --box-midnight: #22304E;
+  --box-plum: #4B2A45;
+
+  --background: var(--paper);
+  --foreground: var(--ink);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+@layer base {
+  * {
+    border-color: rgba(42, 35, 23, 0.13);
+  }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  body {
+    background-color: var(--paper);
+    color: var(--ink);
+    font-family: var(--font-jost), 'Jost', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+  }
+
+  /* Headings: Cormorant Garamond, light weight, tight letter-spacing */
+  h1, h2, h3, h4, h5, h6, .heading-serif {
+    font-family: var(--font-cormorant), 'Cormorant Garamond', Georgia, serif;
+    font-weight: 300;
+    letter-spacing: -0.025em;
+  }
+
+  /* Uppercase labels get wide letter-spacing */
+  .eyebrow-label {
+    font-family: var(--font-jost), 'Jost', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    font-size: 0.75rem;
+    font-weight: 400;
+  }
+
+  /* Hindi and Sanskrit: Tiro Devanagari Sanskrit */
+  .font-devanagari {
+    font-family: var(--font-devanagari), 'Tiro Devanagari Sanskrit', serif;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* Hairline utilities */
+.hairline-light {
+  border-color: rgba(42, 35, 23, 0.13);
+}
+
+.hairline-gold {
+  border-color: rgba(168, 132, 47, 0.32);
+}
+
+.hairline-dark {
+  border-color: rgba(233, 219, 188, 0.17);
+}
+
+/* Selection */
+::selection {
+  background: #A8842F;
+  color: #FCFAF5;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #171208;
+}
+::-webkit-scrollbar-thumb {
+  background: #A8842F;
+  border-radius: 3px;
+}
+
+/* Lenis Smooth Scrolling */
+html.lenis, html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+.lenis.lenis-smooth iframe {
+  pointer-events: none;
 }

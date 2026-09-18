@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "skills": {
+    "antigravity-manager": {
+      "source": "reason-machines/trending-skills",
+      "sourceType": "github",
+      "skillPath": "skills/antigravity-manager/SKILL.md",
+      "computedHash": "a82c89af5b50c02880ab67ef92d8ade68555c1ae700d3344e07e3a8fb75c8413"
+    }
+  }
+}
