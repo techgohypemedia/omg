@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import {
@@ -11,12 +11,16 @@ import {
   CheckCircle2,
   Compass,
   Calendar,
-  ShieldCheck
+  ShieldCheck,
 } from 'lucide-react';
 import { GoldSunMark } from '@/components/ui/gold-sun-mark';
 import { motion } from 'framer-motion';
 
-export function ProgramsSection({ hideHeader = false }: { hideHeader?: boolean } = {}) {
+export function ProgramsSection(
+  { hideHeader = false }: { hideHeader?: boolean } = {}
+) {
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+
   const programs = [
     {
       slotNumber: '01',
@@ -37,9 +41,10 @@ export function ProgramsSection({ hideHeader = false }: { hideHeader?: boolean }
         'Daily morning 5-minute audio prompt right on WhatsApp',
         'How to sit without back pain and count 108 beads effortlessly',
         'Direct 1-on-1 check-in with your spiritual mentor',
-        'Morning ritual checklist that fits busy working days'
+        'Morning ritual checklist that fits busy working days',
       ],
-      whatsappText: 'Pranam! I would like to register for the 21-Day Mārga Habit'
+      whatsappText:
+        'Pranam! I would like to register for the 21-Day Mārga Habit',
     },
     {
       slotNumber: '02',
@@ -60,216 +65,386 @@ export function ProgramsSection({ hideHeader = false }: { hideHeader?: boolean }
         'Room-by-room salt and camphor smoke cleansing order',
         'Vastu placement rules for your altar, clock, and crystals',
         'Harmonic tuning using tuned acoustic brass bells',
-        'Direct Q&A thread for awkward corners and apartment layouts'
+        'Direct Q&A thread for awkward corners and apartment layouts',
       ],
-      whatsappText: 'Pranam! I would like to join the waitlist for Panchtatva Space Clearing'
-    }
+      whatsappText:
+        'Pranam! I would like to join the waitlist for Panchtatva Space Clearing',
+    },
   ];
 
   return (
-    <section id="programs" className="bg-[#F5F0E5] py-24 sm:py-32 border-b border-[rgba(42,35,23,0.13)] w-full">
-      <div className="w-full max-w-[1720px] 2xl:max-w-[1840px] mx-auto px-6 sm:px-10 lg:px-16 xl:px-20">
-        {/* Section Header */}
+    <section
+      id="programs"
+      className="relative w-full overflow-hidden border-b border-[rgba(42,35,23,0.13)] bg-[#F5F0E5] py-24 sm:py-32"
+    >
+      <div className="pointer-events-none absolute inset-0">
+        <div className="absolute -left-40 top-20 h-[420px] w-[420px] rounded-full bg-[#A8842F]/[0.035] blur-3xl" />
+        <div className="absolute -right-40 bottom-20 h-[500px] w-[500px] rounded-full bg-[#A8842F]/[0.04] blur-3xl" />
+      </div>
+
+      <div className="relative mx-auto w-full max-w-[1720px] px-6 sm:px-10 lg:px-16 xl:px-20 2xl:max-w-[1840px]">
         {!hideHeader && (
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 25 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-40px' }}
             transition={{ duration: 0.7 }}
-            className="max-w-3xl mb-16"
+            className="mb-16 max-w-5xl"
           >
-            <div className="flex items-center gap-2 mb-3">
+            <div className="mb-4 flex items-center gap-2">
               <GoldSunMark size={16} />
-              <span className="eyebrow-label text-[#A8842F]">Our Programs</span>
+              <span className="eyebrow-label text-[#A8842F]">
+                Our Programs
+              </span>
             </div>
-            <h2 className="font-serif text-3xl sm:text-5xl lg:text-6xl text-[#2A2317] tracking-tight mb-4">
-              A box gives you the tools. A program builds the habit.
-            </h2>
-            <p className="text-sm sm:text-base lg:text-lg text-[#6A6052] font-light leading-relaxed">
-              Short, guided, and run on WhatsApp. No app to download. Nothing to log into.
-            </p>
+
+            <div className="grid gap-8 lg:grid-cols-[1.3fr_.7fr] lg:items-end">
+              <h2 className="font-serif text-4xl tracking-tight text-[#2A2317] sm:text-5xl lg:text-6xl">
+                A box gives you the tools.
+                <span className="block text-[#A8842F]">
+                  A program builds the habit.
+                </span>
+              </h2>
+
+              <p className="max-w-md text-sm font-light leading-relaxed text-[#6A6052] sm:text-base">
+                Short, guided, and run on WhatsApp. No app to download.
+                Nothing to log into.
+              </p>
+            </div>
           </motion.div>
         )}
 
-        {/* Upgraded Luxury Program Cards Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-10 mb-16">
-          {programs.map((program, idx) => (
-            <motion.div
-              key={idx}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-40px' }}
-              transition={{ duration: 0.7, delay: idx * 0.15 }}
-              whileHover={{ y: -6, transition: { duration: 0.25 } }}
-              className="group flex flex-col bg-[#FCFAF5] border border-[rgba(42,35,23,0.14)] hover:border-[#A8842F] hover:shadow-2xl transition-all duration-500 rounded-xs overflow-hidden"
-            >
-              {/* Card Banner Image with Atmospheric Gradient */}
-              <div className="relative h-64 sm:h-72 w-full overflow-hidden border-b border-[rgba(42,35,23,0.1)] bg-[#171208]">
-                <Image
-                  src={program.image}
-                  alt={program.name}
-                  fill
-                  sizes="(max-width: 1024px) 100vw, 50vw"
-                  className="object-cover object-center group-hover:scale-105 transition-transform duration-700 ease-out"
+        <div className="grid grid-cols-1 gap-10 lg:grid-cols-2">
+          {programs.map((program, idx) => {
+            const isHovered = hoveredIndex === idx;
+            const otherIsHovered =
+              hoveredIndex !== null && hoveredIndex !== idx;
+
+            return (
+              <motion.article
+                key={program.slotNumber}
+                initial={{ opacity: 0, y: 35 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: '-40px' }}
+                transition={{ duration: 0.7, delay: idx * 0.12 }}
+                onMouseEnter={() => setHoveredIndex(idx)}
+                onMouseLeave={() => setHoveredIndex(null)}
+                className={`relative transition-all duration-500 ${
+                  otherIsHovered
+                    ? 'scale-[0.985] opacity-40'
+                    : 'scale-100 opacity-100'
+                }`}
+              >
+                <div
+                  className={`pointer-events-none absolute -inset-6 rounded-[2rem] bg-[radial-gradient(circle,rgba(168,132,47,0.28),transparent_68%)] blur-2xl transition-all duration-700 ${
+                    isHovered
+                      ? 'scale-100 opacity-100'
+                      : 'scale-75 opacity-0'
+                  }`}
                 />
-                {/* Dark Vignette Overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-[#171208] via-[#171208]/50 to-black/20" />
 
-                {/* Top Floating Badge Bar */}
-                <div className="absolute top-4 inset-x-4 flex items-center justify-between pointer-events-none">
-                  <div className="flex items-center gap-2 bg-[#171208]/80 backdrop-blur-md px-3 py-1 rounded-xs border border-[rgba(233,219,188,0.2)]">
-                    <span className="font-mono text-xs font-medium text-[#D3B36B]">
-                      PROGRAM {program.slotNumber}
-                    </span>
-                    <span className="text-[10px] uppercase font-mono tracking-widest text-[#E9DBBC]/70">
-                      WHATSAPP COHORT
-                    </span>
-                  </div>
+                <div
+                  className={`relative overflow-hidden border bg-[#171208] transition-all duration-500 ${
+                    isHovered
+                      ? 'border-[#A8842F] shadow-[0_30px_80px_rgba(42,35,23,0.28)]'
+                      : 'border-[rgba(42,35,23,0.14)] shadow-[0_15px_40px_rgba(42,35,23,0.08)]'
+                  }`}
+                >
+                  <div className="relative h-[330px] overflow-hidden sm:h-[390px]">
+                    <Image
+                      src={program.image}
+                      alt={program.name}
+                      fill
+                      sizes="(max-width: 1024px) 100vw, 50vw"
+                      className={`object-cover object-center transition-transform duration-[1400ms] ease-out ${
+                        isHovered ? 'scale-110' : 'scale-100'
+                      }`}
+                    />
 
-                  {program.isComingSoon ? (
-                    <span className="text-xs uppercase font-mono tracking-widest text-[#D3B36B] px-3 py-1 bg-[#171208]/80 backdrop-blur-md border border-[#A8842F]/40 rounded-xs">
-                      {program.badge}
-                    </span>
-                  ) : (
-                    <span className="text-xs uppercase font-mono tracking-widest text-[#FCFAF5] px-3 py-1 bg-[#171208]/80 backdrop-blur-md border border-emerald-500/40 rounded-xs flex items-center gap-1.5">
-                      <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-                      {program.badge}
-                    </span>
-                  )}
-                </div>
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#171208] via-[#171208]/40 to-black/10" />
 
-                {/* Banner Bottom Title Overlay */}
-                <div className="absolute bottom-5 left-5 right-5">
-                  <h3 className="font-serif text-3xl sm:text-4xl text-[#FCFAF5] tracking-tight mb-1 drop-shadow-sm">
-                    {program.name}
-                  </h3>
-                  <p className="text-xs sm:text-sm italic text-[#E9DBBC] font-serif font-light">
-                    {program.tagline}
-                  </p>
-                </div>
-              </div>
+                    <div
+                      className={`absolute inset-0 bg-[#A8842F]/10 transition-opacity duration-700 ${
+                        isHovered ? 'opacity-100' : 'opacity-0'
+                      }`}
+                    />
 
-              {/* Card Body */}
-              <div className="p-6 sm:p-8 flex-1 flex flex-col justify-between">
-                <div>
-                  {/* Tangible WhatsApp Audio / Protocol Preview Widget */}
-                  <div className="mb-6 p-4 bg-[#F5F0E5] border border-[rgba(168,132,47,0.25)] rounded-xs flex items-center gap-4">
-                    <div className="w-10 h-10 rounded-full bg-[#A8842F] text-[#FCFAF5] flex items-center justify-center shrink-0 shadow-xs group-hover:scale-105 transition-transform">
-                      {program.isComingSoon ? (
-                        <Compass className="w-5 h-5 text-[#FCFAF5]" />
-                      ) : (
-                        <Play className="w-4 h-4 ml-0.5 fill-current text-[#FCFAF5]" />
-                      )}
+                    <div
+                      className={`pointer-events-none absolute -right-3 top-4 font-serif text-[11rem] leading-none text-white/[0.055] transition-all duration-700 ${
+                        isHovered
+                          ? 'translate-x-0 scale-105'
+                          : 'translate-x-6'
+                      }`}
+                    >
+                      {program.slotNumber}
                     </div>
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center justify-between gap-2 mb-1">
-                        <span className="text-[10px] uppercase font-mono tracking-widest text-[#A8842F] font-semibold">
-                          {program.delivery}
-                        </span>
-                        <span className="text-[10px] font-mono text-[#9B9081]">
-                          {program.audioDuration}
+
+                    <div className="absolute left-5 right-5 top-5 z-10 flex items-start justify-between gap-3">
+                      <div className="border border-white/15 bg-[#171208]/65 px-3 py-2 backdrop-blur-md">
+                        <div className="font-mono text-[10px] tracking-[0.2em] text-[#D3B36B]">
+                          PROGRAM {program.slotNumber}
+                        </div>
+                        <div className="mt-1 text-[8px] uppercase tracking-[0.18em] text-[#E9DBBC]/60">
+                          WhatsApp Cohort
+                        </div>
+                      </div>
+
+                      <div
+                        className={`border px-3 py-2 text-[9px] uppercase tracking-[0.12em] backdrop-blur-md ${
+                          program.isComingSoon
+                            ? 'border-[#A8842F]/50 bg-[#171208]/65 text-[#D3B36B]'
+                            : 'border-emerald-400/40 bg-[#171208]/65 text-[#FCFAF5]'
+                        }`}
+                      >
+                        {!program.isComingSoon && (
+                          <span className="mr-2 inline-block h-1.5 w-1.5 rounded-full bg-emerald-400" />
+                        )}
+                        {program.badge}
+                      </div>
+                    </div>
+
+                    <div className="absolute bottom-0 left-0 right-0 z-10 p-6 sm:p-8">
+                      <div className="mb-4 flex items-center gap-3">
+                        <span className="h-px w-10 bg-[#D3B36B]" />
+                        <span className="font-mono text-[9px] uppercase tracking-[0.2em] text-[#D3B36B]">
+                          Ritual Path
                         </span>
                       </div>
-                      <p className="text-xs font-serif italic text-[#2A2317] truncate font-medium">
-                        &ldquo;{program.audioTitle}&rdquo;
+
+                      <h3 className="max-w-xl font-serif text-3xl tracking-tight text-[#FCFAF5] sm:text-4xl lg:text-[2.8rem]">
+                        {program.name}
+                      </h3>
+
+                      <p className="mt-2 max-w-lg font-serif text-sm italic text-[#E9DBBC]">
+                        {program.tagline}
                       </p>
                     </div>
                   </div>
 
-                  {/* Specification Pills */}
-                  <div className="grid grid-cols-2 gap-2.5 mb-6">
-                    <div className="flex items-center gap-2 p-2.5 bg-[#FCFAF5] border border-[rgba(42,35,23,0.08)] rounded-xs">
-                      <Clock className="w-3.5 h-3.5 text-[#A8842F] shrink-0" />
-                      <div className="text-[11px] leading-tight">
-                        <span className="text-[#9B9081] block text-[9px] uppercase tracking-wider">Duration</span>
-                        <span className="text-[#2A2317] font-medium">{program.length}</span>
+                  <div className="relative bg-[#FCFAF5]">
+                    <div className="absolute bottom-0 left-0 top-0 w-[3px] bg-[#E8DFCF]">
+                      <div
+                        className={`w-full bg-[#A8842F] transition-all duration-700 ${
+                          isHovered ? 'h-full' : 'h-1/4'
+                        }`}
+                      />
+                    </div>
+
+                    <div className="p-6 pl-8 sm:p-8 sm:pl-10 lg:p-10 lg:pl-12">
+                      <div className="relative mb-10">
+                        <div className="mb-5 flex items-center justify-between">
+                          <span className="font-mono text-[9px] uppercase tracking-[0.2em] text-[#A8842F]">
+                            01 / Your Practice
+                          </span>
+                          <span className="font-mono text-[9px] text-[#9B9081]">
+                            {program.audioDuration}
+                          </span>
+                        </div>
+
+                        <div
+                          className={`relative overflow-hidden border border-[rgba(42,35,23,0.12)] bg-[#F5F0E5] p-5 transition-all duration-500 ${
+                            isHovered
+                              ? 'border-[#A8842F]/50 shadow-[0_12px_35px_rgba(168,132,47,0.10)]'
+                              : ''
+                          }`}
+                        >
+                          <div className="mb-5 flex h-6 items-center gap-[3px] overflow-hidden opacity-50">
+                            {[2, 5, 9, 4, 12, 7, 16, 6, 11, 4, 14, 8, 5, 13, 7, 3, 10, 6, 12, 5, 8, 4].map(
+                              (height, i) => (
+                                <span
+                                  key={i}
+                                  className={`w-[2px] bg-[#A8842F] transition-all duration-500 ${
+                                    isHovered ? 'scale-y-125' : ''
+                                  }`}
+                                  style={{ height: `${height}px` }}
+                                />
+                              )
+                            )}
+                          </div>
+
+                          <div className="flex items-center gap-4">
+                            <div
+                              className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#A8842F] text-[#FCFAF5] transition-all duration-500 ${
+                                isHovered
+                                  ? 'scale-110 shadow-[0_8px_25px_rgba(168,132,47,0.35)]'
+                                  : ''
+                              }`}
+                            >
+                              {program.isComingSoon ? (
+                                <Compass className="h-5 w-5" />
+                              ) : (
+                                <Play className="ml-0.5 h-4 w-4 fill-current" />
+                              )}
+                            </div>
+
+                            <div className="min-w-0">
+                              <div className="mb-1 text-[9px] font-semibold uppercase tracking-[0.15em] text-[#A8842F]">
+                                {program.delivery}
+                              </div>
+                              <p className="font-serif text-base italic text-[#2A2317]">
+                                &ldquo;{program.audioTitle}&rdquo;
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="mb-10">
+                        <div className="mb-5 font-mono text-[9px] uppercase tracking-[0.2em] text-[#A8842F]">
+                          02 / Program Rhythm
+                        </div>
+
+                        <div className="grid grid-cols-2 border-y border-[rgba(42,35,23,0.12)]">
+                          <div className="border-r border-[rgba(42,35,23,0.12)] py-5 pr-5">
+                            <Clock className="mb-3 h-4 w-4 text-[#A8842F]" />
+                            <span className="mb-1 block text-[9px] uppercase tracking-[0.15em] text-[#9B9081]">
+                              Duration
+                            </span>
+                            <span className="block font-serif text-sm text-[#2A2317]">
+                              {program.length}
+                            </span>
+                          </div>
+
+                          <div className="py-5 pl-5">
+                            <Calendar className="mb-3 h-4 w-4 text-[#A8842F]" />
+                            <span className="mb-1 block text-[9px] uppercase tracking-[0.15em] text-[#9B9081]">
+                              Timing
+                            </span>
+                            <span className="block font-serif text-sm text-[#2A2317]">
+                              {program.time}
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="mb-10">
+                        <div className="mb-5 flex items-center justify-between">
+                          <span className="font-mono text-[9px] uppercase tracking-[0.2em] text-[#A8842F]">
+                            03 / What Is Included
+                          </span>
+                          <span className="font-mono text-[9px] text-[#9B9081]">
+                            {program.covers.length} Elements
+                          </span>
+                        </div>
+
+                        <div className="grid gap-3 sm:grid-cols-2">
+                          {program.covers.map((point, i) => (
+                            <div
+                              key={i}
+                              className={`group/item relative border border-[rgba(42,35,23,0.08)] bg-[#F8F4EB] p-4 transition-all duration-300 ${
+                                isHovered
+                                  ? 'hover:-translate-y-1 hover:border-[#A8842F]/40 hover:bg-[#F5F0E5]'
+                                  : ''
+                              }`}
+                            >
+                              <div className="mb-3 flex items-center justify-between">
+                                <span className="font-mono text-[10px] text-[#A8842F]">
+                                  0{i + 1}
+                                </span>
+                                <CheckCircle2 className="h-3.5 w-3.5 text-[#A8842F]/70" />
+                              </div>
+
+                              <p className="text-[11px] leading-relaxed text-[#2A2317]">
+                                {point}
+                              </p>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+
+                      <div className="relative overflow-hidden border border-[#A8842F]/30 bg-[#F5F0E5]">
+                        <div className="pointer-events-none absolute -right-2 -top-8 font-serif text-[9rem] leading-none text-[#A8842F]/[0.055]">
+                          {program.slotNumber}
+                        </div>
+
+                        <div className="relative p-6 sm:p-7">
+                          <div className="mb-5 flex items-center justify-between gap-4">
+                            <div>
+                              <span className="mb-2 block font-mono text-[9px] uppercase tracking-[0.18em] text-[#9B9081]">
+                                Enrollment Fee
+                              </span>
+
+                              <div className="flex flex-wrap items-baseline gap-2">
+                                <span className="font-serif text-2xl text-[#2A2317]">
+                                  {program.price}
+                                </span>
+                                <span className="text-xs text-[#6A6052]">
+                                  {program.priceDetail}
+                                </span>
+                              </div>
+                            </div>
+
+                            <div className="hidden text-right sm:block">
+                              <span className="block font-mono text-[8px] uppercase tracking-[0.15em] text-[#9B9081]">
+                                Suitable For
+                              </span>
+                              <span className="mt-1 block max-w-[190px] text-[10px] leading-relaxed text-[#6A6052]">
+                                {program.suitability}
+                              </span>
+                            </div>
+                          </div>
+
+                          <a
+                            href={`https://wa.me/919999999999?text=${encodeURIComponent(
+                              program.whatsappText
+                            )}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className={`group/cta flex w-full items-center justify-center gap-3 px-6 py-4 text-[10px] font-medium uppercase tracking-[0.17em] transition-all duration-300 ${
+                              program.isComingSoon
+                                ? 'border border-[#A8842F] bg-transparent text-[#2A2317] hover:bg-[#A8842F] hover:text-[#FCFAF5]'
+                                : 'bg-[#A8842F] text-[#FCFAF5] hover:bg-[#D3B36B]'
+                            }`}
+                          >
+                            <MessageSquare className="h-4 w-4" />
+                            <span>
+                              {program.isComingSoon
+                                ? 'Join Priority Waitlist'
+                                : 'Enroll via WhatsApp'}
+                            </span>
+                            <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover/cta:translate-x-1" />
+                          </a>
+                        </div>
                       </div>
                     </div>
-
-                    <div className="flex items-center gap-2 p-2.5 bg-[#FCFAF5] border border-[rgba(42,35,23,0.08)] rounded-xs">
-                      <Calendar className="w-3.5 h-3.5 text-[#A8842F] shrink-0" />
-                      <div className="text-[11px] leading-tight">
-                        <span className="text-[#9B9081] block text-[9px] uppercase tracking-wider">Timing</span>
-                        <span className="text-[#2A2317] font-medium">{program.time}</span>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Program Coverage Bullet Points */}
-                  <div className="mb-6 pt-4 border-t border-[rgba(42,35,23,0.08)]">
-                    <span className="text-[10px] uppercase tracking-widest text-[#9B9081] block mb-3 font-mono">
-                      What is included:
-                    </span>
-                    <ul className="space-y-2.5">
-                      {program.covers.map((point, i) => (
-                        <li key={i} className="flex items-start gap-2.5 text-xs text-[#6A6052] leading-relaxed">
-                          <CheckCircle2 className="w-4 h-4 text-[#A8842F] shrink-0 mt-0.5" />
-                          <span className="text-[#2A2317]">{point}</span>
-                        </li>
-                      ))}
-                    </ul>
                   </div>
                 </div>
-
-                {/* Price & WhatsApp Action CTA */}
-                <div className="pt-6 border-t border-[rgba(42,35,23,0.1)] flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                  <div>
-                    <span className="text-[10px] uppercase tracking-widest text-[#9B9081] block font-mono">
-                      Enrollment Fee
-                    </span>
-                    <div className="flex items-baseline gap-2">
-                      <span className="font-serif text-2xl text-[#2A2317] font-medium">
-                        {program.price}
-                      </span>
-                      <span className="text-xs text-[#6A6052]">
-                        {program.priceDetail}
-                      </span>
-                    </div>
-                  </div>
-
-                  <a
-                    href={`https://wa.me/919999999999?text=${encodeURIComponent(program.whatsappText)}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={`inline-flex items-center justify-center gap-2 px-6 py-3 text-xs uppercase tracking-widest font-medium transition-all rounded-xs shadow-xs ${
-                      program.isComingSoon
-                        ? 'border border-[#A8842F] text-[#2A2317] hover:bg-[#A8842F] hover:text-[#FCFAF5]'
-                        : 'bg-[#A8842F] hover:bg-[#D3B36B] text-[#FCFAF5]'
-                    }`}
-                  >
-                    <MessageSquare className="w-4 h-4" />
-                    <span>{program.isComingSoon ? 'Join Priority Waitlist' : 'Enroll via WhatsApp'}</span>
-                  </a>
-                </div>
-              </div>
-            </motion.div>
-          ))}
+              </motion.article>
+            );
+          })}
         </div>
 
-        {/* Framed Editorial Reassurance Bar */}
-        <div className="p-8 sm:p-10 bg-[#FCFAF5] border border-[rgba(168,132,47,0.3)] rounded-xs shadow-sm flex flex-col md:flex-row items-center justify-between gap-6">
-          <div className="flex items-center gap-4 max-w-2xl">
-            <div className="w-12 h-12 rounded-full bg-[#F5F0E5] border border-[rgba(168,132,47,0.3)] flex items-center justify-center shrink-0">
-              <ShieldCheck className="w-6 h-6 text-[#A8842F]" />
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="mt-14 flex flex-col justify-between gap-6 border border-[rgba(168,132,47,0.3)] bg-[#FCFAF5] p-7 sm:p-9 md:flex-row md:items-center"
+        >
+          <div className="flex max-w-3xl items-center gap-4">
+            <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full border border-[#A8842F]/30 bg-[#F5F0E5]">
+              <ShieldCheck className="h-6 w-6 text-[#A8842F]" />
             </div>
+
             <div>
-              <h4 className="font-serif text-xl sm:text-2xl text-[#2A2317] mb-1">
+              <h4 className="font-serif text-xl text-[#2A2317] sm:text-2xl">
                 Zero spam. No app to install. Just 5 minutes of stillness.
               </h4>
-              <p className="text-xs sm:text-sm text-[#6A6052] font-light leading-relaxed">
-                Direct audio and guidance delivered right into WhatsApp at sunrise. One prompt, one practice, and direct mentor Q&amp;A.
+              <p className="mt-1 text-xs font-light leading-relaxed text-[#6A6052] sm:text-sm">
+                Direct audio and guidance delivered right into WhatsApp at
+                sunrise. One prompt, one practice, and direct mentor Q&amp;A.
               </p>
             </div>
           </div>
 
           <Link
             href="/programs"
-            className="shrink-0 inline-flex items-center gap-2 px-7 py-3.5 border border-[#A8842F] text-[#2A2317] hover:bg-[#F5F0E5] hover:text-[#A8842F] text-xs uppercase tracking-[0.18em] transition-all font-medium rounded-xs"
+            className="inline-flex shrink-0 items-center gap-3 border border-[#A8842F] px-7 py-3.5 text-xs font-medium uppercase tracking-[0.18em] text-[#2A2317] transition-all duration-300 hover:bg-[#A8842F] hover:text-[#FCFAF5]"
           >
             <span>Explore all programs</span>
-            <ArrowRight className="w-4 h-4 text-[#A8842F]" />
+            <ArrowRight className="h-4 w-4" />
           </Link>
-        </div>
+        </motion.div>
       </div>
     </section>
   );

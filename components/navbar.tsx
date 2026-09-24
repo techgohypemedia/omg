@@ -12,14 +12,20 @@ import { motion } from 'framer-motion';
 export function Navbar() {
   const pathname = usePathname();
   const { totalCount, setIsOpen, setIsSearchOpen, setIsAccountOpen } = useCart();
+
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [hydrated, setHydrated] = useState(false);
 
   useEffect(() => {
+    setHydrated(true);
+
     const handleScroll = () => {
       setScrolled(window.scrollY > 20);
     };
+
     window.addEventListener('scroll', handleScroll);
+
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
@@ -35,11 +41,21 @@ export function Navbar() {
       {/* Announcement Bar */}
       <div className="w-full bg-[#221A0E] border-b border-[rgba(168,132,47,0.25)] text-[#E9DBBC] text-center py-2.5 px-4 transition-colors relative z-50">
         <div className="w-full max-w-[1720px] 2xl:max-w-[1840px] mx-auto flex items-center justify-center gap-2 text-[11px] sm:text-xs tracking-[0.18em] font-light uppercase">
-          <GoldSunMark size={12} className="opacity-70 hidden sm:inline-block" />
+          <GoldSunMark
+            size={12}
+            className="opacity-70 hidden sm:inline-block"
+          />
+
           <span>Free delivery across India</span>
+
           <span className="text-[#A8842F] mx-1.5">·</span>
+
           <span>Blessed and packed by hand</span>
-          <GoldSunMark size={12} className="opacity-70 hidden sm:inline-block" />
+
+          <GoldSunMark
+            size={12}
+            className="opacity-70 hidden sm:inline-block"
+          />
         </div>
       </div>
 
@@ -56,10 +72,12 @@ export function Navbar() {
       >
         <div className="w-full max-w-[1720px] 2xl:max-w-[1840px] mx-auto px-6 sm:px-10 lg:px-16 xl:px-20">
           <div className="relative h-22 flex items-center justify-between">
+
             {/* Left: Navigation Links (Desktop) */}
             <nav className="hidden md:flex items-center space-x-7 lg:space-x-9 z-10">
               {navLinks.map((link) => {
                 const isActive = pathname === link.href;
+
                 return (
                   <Link
                     key={link.href}
@@ -71,6 +89,7 @@ export function Navbar() {
                     }`}
                   >
                     <span>{link.label}</span>
+
                     {/* Active / Hover Indicator */}
                     <span
                       className={`absolute -bottom-1 left-0 right-0 h-[1.5px] bg-[#A8842F] transition-all duration-300 ${
@@ -90,7 +109,11 @@ export function Navbar() {
               className="md:hidden p-2 text-[#E9DBBC] hover:text-[#D3B36B] z-10"
               aria-label="Toggle navigation menu"
             >
-              {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+              {mobileMenuOpen ? (
+                <X className="w-6 h-6" />
+              ) : (
+                <Menu className="w-6 h-6" />
+              )}
             </button>
 
             {/* Center: OMG Mark Logo — Mathematically centered via absolute positioning */}
@@ -106,24 +129,34 @@ export function Navbar() {
 
             {/* Right: Tools (Search · Account · Bag) */}
             <div className="flex items-center space-x-5 sm:space-x-7 z-10">
+
+              {/* Search */}
               <button
                 onClick={() => setIsSearchOpen(true)}
                 className="flex items-center gap-2 text-[11px] uppercase tracking-[0.2em] text-[#E9DBBC]/80 hover:text-[#D3B36B] transition-colors py-1 group"
                 aria-label="Search"
               >
                 <Search className="w-4 h-4 text-[#D3B36B] group-hover:scale-110 transition-transform" />
-                <span className="hidden sm:inline font-sans">Search</span>
+
+                <span className="hidden sm:inline font-sans">
+                  Search
+                </span>
               </button>
 
+              {/* Account */}
               <button
                 onClick={() => setIsAccountOpen(true)}
                 className="flex items-center gap-2 text-[11px] uppercase tracking-[0.2em] text-[#E9DBBC]/80 hover:text-[#D3B36B] transition-colors py-1 group"
                 aria-label="Account"
               >
                 <User className="w-4 h-4 text-[#D3B36B] group-hover:scale-110 transition-transform" />
-                <span className="hidden sm:inline font-sans">Account</span>
+
+                <span className="hidden sm:inline font-sans">
+                  Account
+                </span>
               </button>
 
+              {/* Shopping Bag */}
               <button
                 onClick={() => setIsOpen(true)}
                 className="flex items-center gap-2 text-[11px] uppercase tracking-[0.2em] text-[#E9DBBC] hover:text-[#D3B36B] transition-colors py-1 group relative"
@@ -131,19 +164,28 @@ export function Navbar() {
               >
                 <div className="relative">
                   <ShoppingBag className="w-4 h-4 text-[#D3B36B] group-hover:scale-110 transition-transform" />
-                  {totalCount > 0 && (
+
+                  {/* Hydration-safe cart badge */}
+                  {hydrated && totalCount > 0 && (
                     <motion.span
                       initial={{ scale: 0 }}
                       animate={{ scale: 1 }}
                       exit={{ scale: 0 }}
-                      transition={{ type: 'spring', stiffness: 500, damping: 25 }}
+                      transition={{
+                        type: 'spring',
+                        stiffness: 500,
+                        damping: 25,
+                      }}
                       className="absolute -top-1.5 -right-2 bg-[#A8842F] text-[#FCFAF5] text-[9px] font-mono font-medium rounded-full w-4 h-4 flex items-center justify-center shadow-xs"
                     >
                       {totalCount}
                     </motion.span>
                   )}
                 </div>
-                <span className="hidden sm:inline font-sans">Bag</span>
+
+                <span className="hidden sm:inline font-sans">
+                  Bag
+                </span>
               </button>
             </div>
           </div>
@@ -162,7 +204,10 @@ export function Navbar() {
                 {link.label}
               </Link>
             ))}
+
             <div className="pt-2 flex flex-col gap-3">
+
+              {/* Mobile Search */}
               <button
                 onClick={() => {
                   setMobileMenuOpen(false);
@@ -173,6 +218,8 @@ export function Navbar() {
                 <Search className="w-4 h-4 text-[#D3B36B]" />
                 <span>Search</span>
               </button>
+
+              {/* Mobile Account */}
               <button
                 onClick={() => {
                   setMobileMenuOpen(false);
@@ -183,6 +230,7 @@ export function Navbar() {
                 <User className="w-4 h-4 text-[#D3B36B]" />
                 <span>Account & Orders</span>
               </button>
+
             </div>
           </div>
         )}

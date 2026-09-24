@@ -9,6 +9,7 @@ import { ConsultationSection } from "@/components/sections/consultation-section"
 import { TestimonialsSection } from "@/components/sections/testimonials-section";
 import { YouTubeSection } from "@/components/sections/youtube-section";
 import { CommunitySection } from "@/components/sections/community-section";
+import { FAQSection } from "@/components/sections/faq-section";
 import { FooterSection } from "@/components/sections/footer-section";
 
 export default function Home() {
@@ -47,6 +48,9 @@ export default function Home() {
 
         {/* 11. Join Our Community (LIGHT BAND) */}
         <CommunitySection />
+
+        {/* FAQ */}
+        <FAQSection />
       </main>
 
       {/* 12. Footer (DARK) */}
