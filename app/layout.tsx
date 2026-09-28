@@ -5,7 +5,6 @@ import { CartProvider } from "@/lib/cart-context";
 import { CartDrawer } from "@/components/cart-drawer";
 import { ConsultationModal } from "@/components/consultation-modal";
 import { SearchModal } from "@/components/search-modal";
-import { AccountModal } from "@/components/account-modal";
 import { SmoothScroller } from "@/components/smooth-scroller";
 
 const cormorant = Cormorant_Garamond({
@@ -53,7 +52,6 @@ export default function RootLayout({
           <CartDrawer />
           <ConsultationModal />
           <SearchModal />
-          <AccountModal />
         </CartProvider>
       </body>
     </html>

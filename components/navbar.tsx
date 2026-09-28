@@ -31,8 +31,8 @@ export function Navbar() {
 
   const navLinks = [
     { label: 'Home', href: '/' },
-    { label: 'Spiritual Boxes', href: '/spiritual-boxes' },
-    { label: 'Programs', href: '/programs' },
+    { label: 'Shop', href: '/shop' },
+    { label: 'About', href: '/about' },
     { label: 'Contact Us', href: '/contact' },
   ];
 
@@ -144,8 +144,8 @@ export function Navbar() {
               </button>
 
               {/* Account */}
-              <button
-                onClick={() => setIsAccountOpen(true)}
+              <Link
+                href="/login"
                 className="flex items-center gap-2 text-[11px] uppercase tracking-[0.2em] text-[#E9DBBC]/80 hover:text-[#D3B36B] transition-colors py-1 group"
                 aria-label="Account"
               >
@@ -154,7 +154,7 @@ export function Navbar() {
                 <span className="hidden sm:inline font-sans">
                   Account
                 </span>
-              </button>
+              </Link>
 
               {/* Shopping Bag */}
               <button
@@ -220,16 +220,14 @@ export function Navbar() {
               </button>
 
               {/* Mobile Account */}
-              <button
-                onClick={() => {
-                  setMobileMenuOpen(false);
-                  setIsAccountOpen(true);
-                }}
-                className="flex items-center gap-2 text-xs uppercase tracking-widest text-[#E9DBBC]/80 py-1"
+              <Link
+                href="/login"
+                onClick={() => setMobileMenuOpen(false)}
+                className="flex items-center gap-2 text-xs uppercase tracking-widest text-[#E9DBBC]/80 py-1 hover:text-[#D3B36B]"
               >
                 <User className="w-4 h-4 text-[#D3B36B]" />
                 <span>Account & Orders</span>
-              </button>
+              </Link>
 
             </div>
           </div>

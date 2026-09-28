@@ -14,6 +14,7 @@ export function SmoothScroller() {
       smoothWheel: true,
       wheelMultiplier: 0.95,
       touchMultiplier: 1.6,
+      prevent: (node) => node.hasAttribute('data-lenis-prevent') || Boolean(node.closest?.('[data-lenis-prevent]')),
     });
 
     function raf(time: number) {

@@ -2,12 +2,9 @@ import { Navbar } from "@/components/navbar";
 import { HeroSection } from "@/components/sections/hero-section";
 import { SacredToolsSection } from "@/components/sections/sacred-tools-section";
 import { SpiritualBoxesSection } from "@/components/sections/spiritual-boxes-section";
-import { ProgramsSection } from "@/components/sections/programs-section";
 import { PhilosophySection } from "@/components/sections/philosophy-section";
 import { WhyTribeSection } from "@/components/sections/why-tribe-section";
 import { ConsultationSection } from "@/components/sections/consultation-section";
-import { TestimonialsSection } from "@/components/sections/testimonials-section";
-import { YouTubeSection } from "@/components/sections/youtube-section";
 import { CommunitySection } from "@/components/sections/community-section";
 import { FAQSection } from "@/components/sections/faq-section";
 import { FooterSection } from "@/components/sections/footer-section";
@@ -28,10 +25,7 @@ export default function Home() {
         {/* 3 & 4. Our Spiritual Boxes & Six Single Pieces (LIGHT) */}
         <SpiritualBoxesSection />
 
-        {/* 5. Our Programs (LIGHT BAND) */}
-        <ProgramsSection />
-
-        {/* 6. Our Philosophy — panchtatva (DARK) */}
+        {/* 5. Our Philosophy — panchtatva (DARK) */}
         <PhilosophySection />
 
         {/* 7. Why OMG Tribe (LIGHT) */}
@@ -40,13 +34,7 @@ export default function Home() {
         {/* 8. Book a Consultation (LIGHT BAND) */}
         <ConsultationSection />
 
-        {/* 9. What People Are Saying — video testimonials (LIGHT) */}
-        <TestimonialsSection />
-
-        {/* 10. Watch & Learn — YouTube (DARK) */}
-        <YouTubeSection />
-
-        {/* 11. Join Our Community (LIGHT BAND) */}
+        {/* 9. Join Our Community (LIGHT BAND) */}
         <CommunitySection />
 
         {/* FAQ */}
